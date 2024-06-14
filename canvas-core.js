@@ -99,7 +99,7 @@ class CircularMotion extends HTMLElement {
     requestAnimationFrame(()=>{
       this.animate()
     });
-    this.c.fillStyle = 'rgba(255,255,255,0.05)'
+    this.c.fillStyle = 'rgba(0,0,0,0.05)'
     this.c.fillRect(0,0,this.canvas.width,this.canvas.height);
     
     this.particles.forEach(particle => {

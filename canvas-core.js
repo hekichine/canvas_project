@@ -294,7 +294,7 @@ class GalacticLight extends HTMLElement {
     });
   }
   init() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 150; i++) {
       const canvasWidth = this.canvas.width + 300;
       const canvasHeight = this.canvas.height + 300;
       const x = Math.random() * canvasWidth - canvasWidth / 2;
@@ -326,3 +326,90 @@ class GalacticLight extends HTMLElement {
   }
 }
 customElements.define("galactic-light", GalacticLight);
+
+// 
+// =================================
+//
+//      FIRE WORKS
+//
+// =================================
+class Fire {
+  constructor(x, y, radius, color) {
+    this.c = c;
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+  }
+  draw() {
+    this.c.beginPath();
+    this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    this.c.fillStyle = this.color;
+    this.c.fill();
+    this.c.closePath();
+  }
+  update() {
+    this.draw();
+  }
+}
+class FireWorks extends HTMLElement {
+  constructor() {
+    super();
+    this.canvas = this.querySelector("canvas");
+    this.c = this.canvas.getContext("2d");
+    this.canvas.width = innerWidth;
+    this.canvas.height = innerHeight;
+    this.mouse = {
+      x: innerWidth / 2,
+      y: innerHeight / 2,
+    };
+    this.colors = [
+      "#2185c",
+      "#7ecefd",
+      "#fff6e5",
+      "#ff7f66",
+      "#fff",
+      "#add8e6",
+      "#00008b",
+      "#84e4e0",
+      "#ece5b6",
+      "#e1eb78",
+      "#caffd6",
+      "#FFFDD0",
+      "#ffdf00",
+      "#001f3f",
+      "#fcc6de",
+      "#ffa500",
+      "#d966d9",
+      "#b1907f",
+      "#c8ad7f",
+      "#b87333",
+      "#dadbdd",
+      "",
+    ];
+    this.objects = [];
+
+    window.addEventListener("resize", () => {
+      this.canvas.width = innerWidth;
+      this.canvas.height = innerHeight;
+      this.init();
+    });
+    this.init();
+    this.animate();
+  }
+  init() {
+    for (let i = 0; i < 400; i++) {
+      // objects.push();
+    }
+  }
+  animate() {
+    requestAnimationFrame(this.animate.bind(this));
+    this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.c.fillText("HTML CANVAS", this.mouse.x, this.mouse.y);
+
+    // this.objects.forEach(object => {
+    //   object.update();
+    // })
+  }
+}
+customElements.define('fire-works',FireWorks)

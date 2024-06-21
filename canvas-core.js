@@ -421,7 +421,8 @@ class fireWork_Particle {
       this.c.beginPath();
       this.c.moveTo(this.history[i].x, this.history[i].y);
       this.c.lineTo(this.history[i + 1].x, this.history[i + 1].y);
-      this.c.strokeStyle = this.colors[Math.floor(Math.random()*this.colors.length)];
+      this.c.strokeStyle =
+        this.colors[Math.floor(Math.random() * this.colors.length)];
       this.c.lineWidth = this.radius;
       this.c.stroke();
       this.c.closePath();
@@ -476,7 +477,7 @@ class FireWork {
 
     this.firework = new fireWork_Particle(
       this.c,
-      this.random(this.canvas.width / 2 - 50, this.canvas.width / 2),
+      this.random(this.canvas.width / 2 - 150, this.canvas.width / 2),
       this.canvas.height,
       true,
       this.color
@@ -533,6 +534,8 @@ class FireWork {
 class FireWorks extends HTMLElement {
   constructor() {
     super();
+    this.play_btn = this.querySelector("button.playsound");
+    this.audio = this.querySelector(".fireworks_sound");
     this.canvas = this.querySelector("canvas");
     this.c = this.canvas.getContext("2d");
     this.canvas.width = innerWidth;
@@ -567,13 +570,14 @@ class FireWorks extends HTMLElement {
     this.density = 2;
     this.fireworksArrayLength = 50;
     this.fireworks = [];
-    
-    window.addEventListener('resize', () => {
+  
+
+    window.addEventListener("resize", () => {
       this.canvas.width = innerWidth;
       this.canvas.height = innerHeight;
-      this.init();
     });
     this.animate();
+    this.playHandle();
   }
 
   animate() {
@@ -583,7 +587,8 @@ class FireWorks extends HTMLElement {
     this.c.fillStyle = "rgba(0,0,0,.3)";
     this.c.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    if (Math.round(this.random(0, 100)) < this.density) {
+    // configure quantity fire
+    if (Math.round(this.random(0, 20)) < this.density) {
       this.fireworks.push(
         new FireWork(
           this.canvas,
@@ -603,6 +608,20 @@ class FireWorks extends HTMLElement {
     if (this.fireworks.length >= this.fireworksArrayLength) {
       this.fireworks.splice(0, 1);
     }
+
+  }
+  playHandle() {
+    let is_play_sound = false;
+    let self = this;
+    self.play_btn.addEventListener("click", function () {
+      this.classList.toggle("is-playing");
+      is_play_sound = !is_play_sound;
+      if (is_play_sound) {
+        self.audio.play();
+      } else {
+        self.audio.pause();
+      }
+    });
   }
   random(max, min) {
     let x = Math.random() * (max - min) + min;
